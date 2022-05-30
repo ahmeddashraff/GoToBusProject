@@ -22,4 +22,8 @@ public class StationService {
 		em.merge(station);
 		
 	}
+	
+	public Station getStationById(int id) {
+		return em.find(Station.class, id);
+	}
 }
