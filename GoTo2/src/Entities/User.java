@@ -2,6 +2,8 @@ package Entities;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.Set;
+
 import javax.persistence.*;
 
 /**
@@ -17,13 +19,16 @@ public class User implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long user_id;
+	private Integer user_id;
 	
 	private String username;
 	private String password;
 	private String full_name;
 	private String role;
 	private static final long serialVersionUID = 1L;
+	
+	@ManyToMany(mappedBy="users", fetch=FetchType.EAGER)
+	private Set<Trip> trips;
 
 	public User() {
 		super();
@@ -84,12 +89,20 @@ public class User implements Serializable {
 		return true;
 	}*/
 
-	public Long getId() {
+	public Integer getId() {
 		return this.user_id;
 	}
 	
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.user_id = id;
+	}
+	
+	public void setTrips(Set<Trip> trips) {
+		this.trips = trips;
+	}
+	
+	public Set<Trip> getTrips() {
+		return this.trips;
 	}
 
 }

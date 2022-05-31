@@ -19,13 +19,25 @@ import javax.persistence.*;
 public class Trip implements Serializable {
 
 	
-	@ManyToOne
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer trip_id;
+	/*@ManyToOne
 	@JoinColumn(name="fromStation")
 	private Station from_station;
 	
 	@ManyToOne
 	@JoinColumn(name="toStation")
-	private Station to_station;
+	private Station to_station;*/
+	private String from_station;
+	private String to_station;
+	
+	@ManyToMany
+	@JoinTable(
+		name="TripXUser",
+		joinColumns=@JoinColumn(name="trip_id"),
+		inverseJoinColumns=@JoinColumn(name="user_id"))
+	private Set<User> users;
 	
 	
 	private Integer available_seats;
@@ -36,9 +48,7 @@ public class Trip implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date arrival_time;   
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer trip_id;
+
 	
 	private static final long serialVersionUID = 1L;
 
@@ -46,7 +56,7 @@ public class Trip implements Serializable {
 	public Trip() {
 		super();
 	}   
-	public Station getFrom_station() {
+	/*public Station getFrom_station() {
 		return this.from_station;
 	}
 
@@ -59,7 +69,23 @@ public class Trip implements Serializable {
 
 	public void setTo_station(Station to_station) {
 		this.to_station = to_station;
+	}   */
+	
+	public String getFrom_station() {
+		return this.from_station;
+	}
+
+	public void setFrom_station(String from_station) {
+		this.from_station = from_station;
 	}   
+	public String getTo_station() {
+		return this.to_station;
+	}
+
+	public void setTo_station(String to_station) {
+		this.to_station = to_station;
+	}
+	
 	public Integer getAvailable_seats() {
 		return this.available_seats;
 	}
@@ -89,4 +115,11 @@ public class Trip implements Serializable {
 		this.trip_id = trip_id;
 	}
    
+	public Set<User> getUsers(){
+		return this.users;
+	}
+	
+	public void setUsers(Set<User> users){
+		this.users = users;
+	}
 }

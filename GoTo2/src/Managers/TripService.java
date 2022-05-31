@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import Entities.Trip;
-import Entities.User;
 
 @Stateless
 public class TripService {
@@ -24,5 +23,10 @@ public class TripService {
 	public List<Trip> searchTrips() {
         TypedQuery<Trip> query = em.createNamedQuery("findAllTrips", Trip.class);
         return query.getResultList();
+    }
+	
+	public Trip findTripbyid (int id)
+    {
+        return em.find(Trip.class, id);
     }
 }

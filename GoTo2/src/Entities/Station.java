@@ -26,11 +26,11 @@ public class Station implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	@OneToMany(mappedBy="from_station", fetch=FetchType.EAGER)
+	/*@OneToMany(mappedBy="from_station", fetch=FetchType.EAGER)
 	private Set<Trip> tripsfrom;
 	
 	@OneToMany(mappedBy="to_station", fetch=FetchType.EAGER)
-	private Set<Trip> tripsto;
+	private Set<Trip> tripsto;*/
 
 	public Station() {
 		super();
@@ -64,7 +64,7 @@ public class Station implements Serializable {
 		this.latitude = latitude;
 	}
 	
-	public Set<Trip> getTripsFrom() {
+	/*public Set<Trip> getTripsFrom() {
 		return this.tripsfrom;
 	}
    
@@ -78,5 +78,5 @@ public class Station implements Serializable {
    
 	public void setTripsTo(Set<Trip> trips) {
 		this.tripsto = trips;
-	}
+	}*/
 }

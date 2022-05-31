@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import java.util.List;
 
+import Entities.Station;
 import Entities.User;
 
 @Stateless
@@ -25,7 +26,6 @@ public class UserService {
 
 	public void updateUser(User user) {
 		em.merge(user);
-		//badr
 		
 	}
 	
@@ -34,8 +34,9 @@ public class UserService {
         return query.getResultList();
     }
 	
-	/*public User findUserbyid (int id)
+	public User findUserbyid (int id)
     {
         return em.find(User.class, id);
-    }*/
+    }
+
 }
