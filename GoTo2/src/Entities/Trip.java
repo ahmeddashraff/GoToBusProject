@@ -19,14 +19,21 @@ import javax.persistence.*;
 public class Trip implements Serializable {
 
 	
-	private String from_station;
-	private String to_station;
+	//@ManyToOne
+	//@JoinColumn(name="fromStation")
+	private Station from_station;
+	
+	//@ManyToOne
+	//@JoinColumn(name="toStation")
+	private Station to_station;
+	
+	
 	private Integer available_seats;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date departure_time;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date arrival_time;   
 	
 	@Id
@@ -35,24 +42,22 @@ public class Trip implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(mappedBy="Trip", fetch=FetchType.EAGER)
-	private Set<Station> trips;
 	
 	public Trip() {
 		super();
 	}   
-	public String getFrom_station() {
+	public Station getFrom_station() {
 		return this.from_station;
 	}
 
-	public void setFrom_station(String from_station) {
+	public void setFrom_station(Station from_station) {
 		this.from_station = from_station;
 	}   
-	public String getTo_station() {
+	public Station getTo_station() {
 		return this.to_station;
 	}
 
-	public void setTo_station(String to_station) {
+	public void setTo_station(Station to_station) {
 		this.to_station = to_station;
 	}   
 	public Integer getAvailable_seats() {

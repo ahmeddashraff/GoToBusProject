@@ -3,6 +3,8 @@ package Entities;
 import java.io.Serializable;
 import java.lang.Integer;
 import java.lang.String;
+import java.util.Set;
+
 import javax.persistence.*;
 
 /**
@@ -21,6 +23,10 @@ public class Station implements Serializable {
 	private Double longitude;
 	private Double latitude;
 	private static final long serialVersionUID = 1L;
+	
+	
+	//@OneToMany(mappedBy="Station", fetch=FetchType.EAGER)
+	//private Set<Trip> trips;
 
 	public Station() {
 		super();
@@ -53,5 +59,12 @@ public class Station implements Serializable {
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
+	
+	/*public Set<Trip> getTrips() {
+		return this.trips;
+	}
    
+	public void setTrip(Set<Trip> trips) {
+		this.trips = trips;
+	}*/
 }
