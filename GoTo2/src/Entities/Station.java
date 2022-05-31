@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+
 /**
  * Entity implementation class for Entity: Station
  *
@@ -25,8 +26,11 @@ public class Station implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	//@OneToMany(mappedBy="Station", fetch=FetchType.EAGER)
-	//private Set<Trip> trips;
+	@OneToMany(mappedBy="from_station", fetch=FetchType.EAGER)
+	private Set<Trip> tripsfrom;
+	
+	@OneToMany(mappedBy="to_station", fetch=FetchType.EAGER)
+	private Set<Trip> tripsto;
 
 	public Station() {
 		super();
@@ -60,11 +64,19 @@ public class Station implements Serializable {
 		this.latitude = latitude;
 	}
 	
-	/*public Set<Trip> getTrips() {
-		return this.trips;
+	public Set<Trip> getTripsFrom() {
+		return this.tripsfrom;
 	}
    
-	public void setTrip(Set<Trip> trips) {
-		this.trips = trips;
-	}*/
+	public void setTripsFrom(Set<Trip> trips) {
+		this.tripsfrom = trips;
+	}
+	
+	public Set<Trip> getTripsTo() {
+		return this.tripsto;
+	}
+   
+	public void setTripsTo(Set<Trip> trips) {
+		this.tripsto = trips;
+	}
 }

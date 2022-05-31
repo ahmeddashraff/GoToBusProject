@@ -19,12 +19,12 @@ import javax.persistence.*;
 public class Trip implements Serializable {
 
 	
-	//@ManyToOne
-	//@JoinColumn(name="fromStation")
+	@ManyToOne
+	@JoinColumn(name="fromStation")
 	private Station from_station;
 	
-	//@ManyToOne
-	//@JoinColumn(name="toStation")
+	@ManyToOne
+	@JoinColumn(name="toStation")
 	private Station to_station;
 	
 	
