@@ -32,7 +32,7 @@ public class Trip implements Serializable {
 	private String from_station;
 	private String to_station;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="TripXUser",
 		joinColumns=@JoinColumn(name="trip_id"),
