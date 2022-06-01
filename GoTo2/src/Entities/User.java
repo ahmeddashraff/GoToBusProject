@@ -31,6 +31,9 @@ public class User implements Serializable {
 
 	@ManyToMany(mappedBy="users", fetch=FetchType.EAGER)
 	private Set<Trip> trips;
+	
+	@OneToMany(mappedBy="nuser", fetch=FetchType.EAGER)
+	private Set<Notification> notification;
 
 	public User() {
 		super();
@@ -110,6 +113,14 @@ public class User implements Serializable {
 	public void addtrip(Trip t)
 	{
 		this.trips.add(t);
+	}
+	
+	public void setNotification(Set<Notification> notification) {
+		this.notification = notification;
+	}
+	
+	public Set<Notification> getNotification(){
+		return this.notification;
 	}
 
 }

@@ -1,5 +1,6 @@
 package Service;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -17,8 +18,10 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 
 import Entities.Booking;
+import Entities.Notification;
 import Entities.Trip;
 import Entities.User;
+import Managers.NotificationService;
 import Managers.TripService;
 import Managers.UserService;
 @Stateless
@@ -33,6 +36,8 @@ public class TripRESTService {
 	@EJB
 	private UserService userService;
 	
+	@EJB
+	private NotificationService notificationService;
 	
 	@POST
 	public Response CreateTrip(Trip trip) {
@@ -52,17 +57,33 @@ public class TripRESTService {
 	@POST
 	@Path("booktrip")
 	public Response bookTrip(Booking book) {
+		Date date = new Date();
+	    
 		ResponseBuilder builder;
+		String message;
+		Notification noti = new Notification();
 		
 		Trip trip = tripService.findTripbyid(book.getTrip_id());
 		User user = userService.findUserbyid(book.getUser_id());
 		
 		if(trip.getAvailable_seats()<1) {
+			message = "Sorry, Trip " + trip.getFrom_station() +" to " + trip.getTo_station() + " have no available seats";
+			noti.setMessage(message);
+			noti.setNotification_datetime(date);
+			noti.setNuser(user);
+			notificationService.addNotification(noti);
+			
 			builder = Response.serverError();
 			return builder.build();
 		}else {
 		trip.setAvailable_seats(trip.getAvailable_seats() - 1);
 		trip.addUser(user);
+		message = "You have booked trip from " + trip.getFrom_station() +" to " + trip.getTo_station() + " successfully";
+		noti.setMessage(message);
+		noti.setNotification_datetime(date);
+		noti.setNuser(user);
+		notificationService.addNotification(noti);
+		
 		builder = Response.ok();
 		return builder.build();
 		}
