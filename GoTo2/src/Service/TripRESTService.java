@@ -59,10 +59,15 @@ public class TripRESTService {
 	}*/
 	
 	@POST
-	public Response CreateTrip(Trip trip) {
+	@Path("{id}")
+	public Response CreateTrip(@PathParam("id")int id,Trip trip) {
 		ResponseBuilder builder;
+		User user = userService.findUserbyid(id);
 		
-		if(stationService.checkIfStationExists(trip.getFrom_station()) && stationService.checkIfStationExists(trip.getTo_station())){
+		if(stationService.checkIfStationExists(trip.getFrom_station())
+				&& stationService.checkIfStationExists(trip.getTo_station())
+				&& user.getRole().equals("admin")){
+			
 			tripService.addTrip(trip);
 			builder = Response.ok();
 			return builder.build();
