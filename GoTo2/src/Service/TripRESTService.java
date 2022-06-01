@@ -1,6 +1,7 @@
 package Service;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -19,9 +20,11 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import Entities.Booking;
 import Entities.Notification;
+import Entities.SearchTrip;
 import Entities.Trip;
 import Entities.User;
 import Managers.NotificationService;
+import Managers.StationService;
 import Managers.TripService;
 import Managers.UserService;
 @Stateless
@@ -35,6 +38,9 @@ public class TripRESTService {
 	
 	@EJB
 	private UserService userService;
+	
+	@EJB
+	private StationService station_service;
 	
 	@EJB
 	private NotificationService notificationService;
@@ -104,4 +110,26 @@ public class TripRESTService {
 			throw new InternalServerErrorException();
 		return check;
 	}
+	
+	@POST	
+	@Path("/searchtrips")
+	public Set<Trip> searchTrip(SearchTrip searchTrip)
+	{
+		
+		String from_station = station_service.getStationById(searchTrip.getFrom_station()).getName();
+		String to_station = station_service.getStationById(searchTrip.getTo_station()).getName();
+		
+		Set<Trip> viewTrips = new HashSet<>();
+		
+		for(Trip trip :	tripService.searchTrips(from_station, to_station))
+		{
+			if(searchTrip.getFrom_date().after(trip.getArrival_time()) && searchTrip.getTo_date().before(trip.getArrival_time())
+			&& searchTrip.getFrom_date().after(trip.getDeparture_time()) && searchTrip.getTo_date().before(trip.getDeparture_time()))
+			{
+				viewTrips.add(trip);
+			}
+		}
+		return viewTrips;
+	}
+	
 }
