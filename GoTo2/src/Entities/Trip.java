@@ -27,13 +27,7 @@ public class Trip implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer trip_id;
-	/*@ManyToOne
-	@JoinColumn(name="fromStation")
-	private Station from_station;
-	
-	@ManyToOne
-	@JoinColumn(name="toStation")
-	private Station to_station;*/
+
 	private String from_station;
 	private String to_station;
 	
@@ -64,20 +58,6 @@ public class Trip implements Serializable {
 	public Trip() {
 		super();
 	}   
-	/*public Station getFrom_station() {
-		return this.from_station;
-	}
-
-	public void setFrom_station(Station from_station) {
-		this.from_station = from_station;
-	}   
-	public Station getTo_station() {
-		return this.to_station;
-	}
-
-	public void setTo_station(Station to_station) {
-		this.to_station = to_station;
-	}   */
 	
 	public String getFrom_station() {
 		return this.from_station;

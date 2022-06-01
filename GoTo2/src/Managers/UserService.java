@@ -9,7 +9,6 @@ import javax.persistence.TypedQuery;
 
 import java.util.List;
 
-import Entities.Station;
 import Entities.User;
 
 @Stateless

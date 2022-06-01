@@ -1,6 +1,5 @@
 package Service;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,21 +47,8 @@ public class TripRESTService {
 	
 	@EJB
 	private StationService stationService;
+
 	
-	/*@POST
-	public Response CreateTrip(Trip trip) {
-		ResponseBuilder builder;
-		try {
-				
-			tripService.addTrip(trip);
-			builder = Response.ok();
-			
-		}catch (Exception e) {
-			throw new InternalServerErrorException(e);
-		}
-		return builder.build();
-		
-	}*/
 	
 	@POST
 	@Path("{id}")
@@ -149,8 +135,6 @@ public class TripRESTService {
 		
 		for(Trip trip :	tripService.searchTrips(from_station, to_station))
 		{
-			/*if(searchTrip.getFrom_date().before(trip.getArrival_time()) && searchTrip.getTo_date().before(trip.getArrival_time())
-			&& searchTrip.getFrom_date().after(trip.getDeparture_time()) && searchTrip.getTo_date().after(trip.getDeparture_time()))*/
 			if(from.compareTo(trip.getDeparture_time()) <= 0 && to.compareTo(trip.getArrival_time()) >= 0)
 			{
 				viewTrips.add(trip);

@@ -6,7 +6,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import Entities.Station;
-import Entities.User;
 
 @Stateless
 public class StationService {
