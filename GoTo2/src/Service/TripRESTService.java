@@ -1,5 +1,6 @@
 package Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -137,21 +138,27 @@ public class TripRESTService {
 	@POST	
 	@Path("/searchtrips")
 	public Set<Trip> searchTrip(SearchTrip searchTrip)
-	{
-		
+	{	
 		String from_station = station_service.getStationById(searchTrip.getFrom_station()).getName();
 		String to_station = station_service.getStationById(searchTrip.getTo_station()).getName();
+		
+		Date from = searchTrip.getFrom_date();
+		Date to = searchTrip.getTo_date();
 		
 		Set<Trip> viewTrips = new HashSet<>();
 		
 		for(Trip trip :	tripService.searchTrips(from_station, to_station))
 		{
-			if(searchTrip.getFrom_date().after(trip.getArrival_time()) && searchTrip.getTo_date().before(trip.getArrival_time())
-			&& searchTrip.getFrom_date().after(trip.getDeparture_time()) && searchTrip.getTo_date().before(trip.getDeparture_time()))
+			/*if(searchTrip.getFrom_date().before(trip.getArrival_time()) && searchTrip.getTo_date().before(trip.getArrival_time())
+			&& searchTrip.getFrom_date().after(trip.getDeparture_time()) && searchTrip.getTo_date().after(trip.getDeparture_time()))*/
+			if(from.compareTo(trip.getDeparture_time()) <= 0 && to.compareTo(trip.getArrival_time()) >= 0)
 			{
 				viewTrips.add(trip);
 			}
 		}
+		if (viewTrips.isEmpty())
+			throw new InternalServerErrorException();
+		
 		return viewTrips;
 	}
 	
