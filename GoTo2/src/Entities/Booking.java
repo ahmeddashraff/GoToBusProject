@@ -29,7 +29,7 @@ public class Booking implements Serializable {
 
 	public void setBooking_id(Integer booking_id) {
 		this.booking_id = booking_id;
-	}   
+	}  
 	public Integer getUser_id() {
 		return this.user_id;
 	}
