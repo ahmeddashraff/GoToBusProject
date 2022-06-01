@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+
 import Entities.Booking;
 import Entities.Trip;
 import Entities.User;
@@ -31,6 +32,7 @@ public class TripRESTService {
 	
 	@EJB
 	private UserService userService;
+	
 	
 	@POST
 	public Response CreateTrip(Trip trip) {
@@ -55,24 +57,15 @@ public class TripRESTService {
 		Trip trip = tripService.findTripbyid(book.getTrip_id());
 		User user = userService.findUserbyid(book.getUser_id());
 		
-		System.out.println(user.getUsername() + " el trips :" + user.getTrips());
-		
-		//Set<Trip> tempT = user.getTrips();
-		//tempT.add(trip);
-		
-		//Set<User> tempU = trip.getUsers();
-		//tempU.add(user);
+		if(trip.getAvailable_seats()<1) {
+			builder = Response.serverError();
+			return builder.build();
+		}else {
+		trip.setAvailable_seats(trip.getAvailable_seats() - 1);
 		trip.addUser(user);
-		
-		//user.setTrips(tempT);
-		//trip.setUsers(tempU);
-
-
-		userService.updateUser(user);
-		System.out.println(user.getUsername() + " el trips :" + user.getTrips());
 		builder = Response.ok();
 		return builder.build();
-		
+		}
 	}
 	
 	@GET
@@ -81,5 +74,13 @@ public class TripRESTService {
 		return tripService.findTripbyid(id);
 	}
 	
-	
+	@GET
+	@Path("/viewtrips/{id}")
+	public Set<Trip> viewUserTrips(@PathParam("id")int id){
+		User user = userService.findUserbyid(id);
+		Set<Trip> check = user.getTrips();
+		if(check == null)
+			throw new InternalServerErrorException();
+		return check;
+	}
 }
