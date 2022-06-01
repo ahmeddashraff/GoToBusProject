@@ -30,7 +30,8 @@ public class StationRESTService {
 	@POST
 	public Response CreateStation(Station station) {
 		ResponseBuilder builder;
-		if (station.getLatitude() > 90 || station.getLatitude() < -90 || station.getLongitude() > 180 || station.getLongitude() <-180)
+		if (stationService.checkIfStationExists(station.getName())||station.getLatitude() > 90 || station.getLatitude() < -90 || station.getLongitude() > 180 || station.getLongitude() <-180)
+	
 			throw new InternalServerErrorException();
 		else {
 			stationService.addStation(station);
