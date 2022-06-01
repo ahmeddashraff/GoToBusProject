@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
-
+import Entities.Booking;
 import Entities.Trip;
 import Entities.User;
 import Managers.TripService;
@@ -46,16 +46,30 @@ public class TripRESTService {
 		return builder.build();
 		
 	}
+	
 	@POST
-	@Path("/booktrip")
-	public Response bookTrip(int trip_id , int user_id) {
+	@Path("booktrip")
+	public Response bookTrip(Booking book) {
 		ResponseBuilder builder;
-		User user = userService.findUserbyid(user_id);
-		Trip trip = tripService.findTripbyid(trip_id);
-		Set<Trip> temp = user.getTrips();
-		temp.add(trip);
-		user.setTrips(temp);
+		
+		Trip trip = tripService.findTripbyid(book.getTrip_id());
+		User user = userService.findUserbyid(book.getUser_id());
+		
+		System.out.println(user.getUsername() + " el trips :" + user.getTrips());
+		
+		//Set<Trip> tempT = user.getTrips();
+		//tempT.add(trip);
+		
+		//Set<User> tempU = trip.getUsers();
+		//tempU.add(user);
+		trip.addUser(user);
+		
+		//user.setTrips(tempT);
+		//trip.setUsers(tempU);
+
+
 		userService.updateUser(user);
+		System.out.println(user.getUsername() + " el trips :" + user.getTrips());
 		builder = Response.ok();
 		return builder.build();
 		

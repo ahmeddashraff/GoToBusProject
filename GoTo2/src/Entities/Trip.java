@@ -6,7 +6,12 @@ import java.lang.String;
 import java.util.Date;
 import java.util.Set;
 
+
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Entity implementation class for Entity: Trip
@@ -32,6 +37,7 @@ public class Trip implements Serializable {
 	private String from_station;
 	private String to_station;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="TripXUser",
@@ -43,9 +49,11 @@ public class Trip implements Serializable {
 	private Integer available_seats;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date departure_time;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date arrival_time;   
 	
 
@@ -121,5 +129,9 @@ public class Trip implements Serializable {
 	
 	public void setUsers(Set<User> users){
 		this.users = users;
+	}
+	
+	public void addUser(User user) {
+		this.users.add(user);
 	}
 }

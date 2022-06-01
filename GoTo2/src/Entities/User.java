@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+
 /**
  * Entity implementation class for Entity: User
  *
@@ -27,6 +28,7 @@ public class User implements Serializable {
 	private String role;
 	private static final long serialVersionUID = 1L;
 	
+
 	@ManyToMany(mappedBy="users", fetch=FetchType.EAGER)
 	private Set<Trip> trips;
 
@@ -103,6 +105,11 @@ public class User implements Serializable {
 	
 	public Set<Trip> getTrips() {
 		return this.trips;
+	}
+	
+	public void addtrip(Trip t)
+	{
+		this.trips.add(t);
 	}
 
 }
