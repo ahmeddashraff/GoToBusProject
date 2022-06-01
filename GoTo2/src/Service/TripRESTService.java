@@ -22,6 +22,7 @@ import Entities.Notification;
 import Entities.Trip;
 import Entities.User;
 import Managers.NotificationService;
+import Managers.StationService;
 import Managers.TripService;
 import Managers.UserService;
 @Stateless
@@ -39,11 +40,14 @@ public class TripRESTService {
 	@EJB
 	private NotificationService notificationService;
 	
-	@POST
+	@EJB
+	private StationService stationService;
+	
+	/*@POST
 	public Response CreateTrip(Trip trip) {
 		ResponseBuilder builder;
 		try {
-
+				
 			tripService.addTrip(trip);
 			builder = Response.ok();
 			
@@ -52,6 +56,21 @@ public class TripRESTService {
 		}
 		return builder.build();
 		
+	}*/
+	
+	@POST
+	public Response CreateTrip(Trip trip) {
+		ResponseBuilder builder;
+		
+		if(stationService.checkIfStationExists(trip.getFrom_station()) && stationService.checkIfStationExists(trip.getTo_station())){
+			tripService.addTrip(trip);
+			builder = Response.ok();
+			return builder.build();
+		}else {
+			
+			builder = Response.serverError();
+			return builder.build();
+		}
 	}
 	
 	@POST
