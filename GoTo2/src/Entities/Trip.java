@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 
-@NamedQuery(name="findAllTrips", query ="select e from User e")
+@NamedQuery(name="findAllTrips", query ="select t from Trip t Where t.from_station = :from_station AND t.to_station = :to_station")
 
 public class Trip implements Serializable {
 
@@ -49,11 +49,11 @@ public class Trip implements Serializable {
 	private Integer available_seats;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date departure_time;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date arrival_time;   
 	
 
