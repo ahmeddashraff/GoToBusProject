@@ -44,6 +44,8 @@ public class StationRESTService {
 	@GET
     public Station getStationById(@PathParam("id")int id)
     {
+        if(stationService.getStationById(id) == null)
+        	throw new InternalServerErrorException(); 
         return stationService.getStationById(id);
     }
 }
